@@ -1,42 +1,52 @@
 import java.util.Scanner;
 
-public class Product{
-    int pcode;
-    String pname;
-    int price;
+public class Product {
+    private String pname;
+    private double price;
 
-    public void readValue(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter product code : ");
-        this.pcode = sc.nextInt();
-        System.out.println("Enter product name : ");
-        this.pname = sc.next();
-        System.out.println("Enter price : ");
-        this.price = sc.nextInt();
-        sc.close();
+    public Product(String pname, double price) {
+        this.pname = pname;
+        this.price = price;
     }
 
-    public static void main(String[] args){
-        Product p1 = new Product();
-        Product p2 = new Product();
-        Product p3 = new Product();
+    public String getPname() {
+        return pname;
+    }
 
-        p1.readValue();
-        p2.readValue();
-        p3.readValue();
+    public double getPrice() {
+        return price;
+    }
 
-        System.out.println("Lowest Price : ");
-        if(p1.price<p2.price){
-            if(p2.price<p3.price){
-                System.out.print(p3.price);
-            }
-            else{
-                System.out.print(p2.price);
-            }
-        }else if(p1.price<p3.price){
-            System.out.print(p3.price);
-        }else{
-            System.out.print(p1.price);
-        }
+    public static Product comparePrice(Product product1, Product product2) {
+        return product1.getPrice() < product2.getPrice()? product1 : product2;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter product 1 name: ");
+
+    
+        String pname1 = scanner.nextLine();
+        System.out.print("Enter product 1 price: ");
+        double price1 = scanner.nextDouble();
+        Product product1 = new Product(pname1, price1);
+
+        System.out.print("Enter product 2 name: ");
+        String pname2 = scanner.next();
+        System.out.print("Enter product 2 price: ");
+        double price2 = scanner.nextDouble();
+        Product product2 = new Product(pname2, price2);
+
+        System.out.print("Enter product 3 name: ");
+        String pname3 = scanner.next();
+        System.out.print("Enter product 3 price: ");
+        double price3 = scanner.nextDouble();
+        Product product3 = new Product(pname3, price3);
+
+        scanner.close();
+
+        Product leastProduct = comparePrice(product1, comparePrice(product2, product3));
+        System.out.println("The product with the least price is: " + leastProduct.getPname() + " with a price of $" + leastProduct.getPrice());
     }
 }
